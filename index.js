@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 const TOKEN = process.env.DISCORD_TOKEN;
-const ADMIN_ID = "1000868973707022417";
+const ADMIN_ID = "1000868973707022417"; // seu Discord ID
 
 let banco = {};
 if (fs.existsSync("banco.json")) {
@@ -20,6 +20,11 @@ function salvar() {
 }
 
 // ───── API Roblox ─────
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
+
 app.post("/getsaldos", (req, res) => {
   const roblox = req.body.roblox;
   for (let id in banco) {
@@ -39,8 +44,6 @@ app.post("/debitar", (req, res) => {
   }
   res.json({ ok: false });
 });
-
-app.listen(process.env.PORT || 3000);
 
 // ───── Discord Ready ─────
 client.once("ready", async () => {
